@@ -22,10 +22,15 @@ public class GameManager : MonoBehaviour
     public Text diamondText;
     public Text starText;
 
-    int score = 0;
+    int score;
     int bestScore, totalDiamond, totalStar;
     bool countScore;
+    bool startWithOldScore;
 
+    [Header("for Player")]
+    public GameObject[] player;
+    Vector3 playerStartPos = new Vector3(0, 2, 0);
+    int selectedCar = 0;
 
     private void Awake()
     {
@@ -33,10 +38,27 @@ public class GameManager : MonoBehaviour
         {
             instance = this;
         }
-    }
+        //Get Selected Car
+        selectedCar = PlayerPrefs.GetInt("SelectCar");
+        Instantiate(player[selectedCar], playerStartPos, Quaternion.identity);
+
+    }//Awake
+
     // Start is called before the first frame update
     void Start()
     {
+        //Debug.Log("Scene Name" + SceneManager.GetActiveScene().name);
+
+        // Play with old score
+        if (startWithOldScore)
+        {
+            score = PlayerPrefs.GetInt("oldScore");
+        }
+        else
+        {
+            score = 0;
+        }
+
         // Total Diamond
         totalDiamond = PlayerPrefs.GetInt("totalDiamond");
         diamondText.text = totalDiamond.ToString();
@@ -84,6 +106,12 @@ public class GameManager : MonoBehaviour
         }
 
     }//GameOver
+
+    public void StartWithScore()
+    {
+        PlayerPrefs.SetInt("oldScore", score);
+        SceneManager.LoadScene("Level");
+    }
 
     IEnumerator UpdateScore()   //UpadateScore
     {

@@ -9,7 +9,7 @@ public class Platform : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        int randNumber = Random.Range(1, 21);
+        int randNumber = Random.Range(1, 51);
         Vector3 tempPos = transform.position;
         tempPos.y += 1.2f;
         if(randNumber<4)

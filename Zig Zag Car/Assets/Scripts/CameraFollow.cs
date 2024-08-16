@@ -14,9 +14,11 @@ public class CameraFollow : MonoBehaviour
     float change = 0f;
     int len;
 
+
     // Start is called before the first frame update
     void Start()
     {
+        target = GameObject.FindWithTag("Player").transform;
         distance = target.position - transform.position;
         len = myColors.Length;
     }//Start
